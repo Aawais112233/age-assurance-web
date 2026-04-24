@@ -5,13 +5,13 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Backend is running ✅");
+  res.status(200).send("Backend is running ✅");
 });
 
 const baseDir = path.join(__dirname, "multimodal");
@@ -65,11 +65,15 @@ app.post(
       const faceFile = req.files.face[0];
       const voiceFile = req.files.voice[0];
 
-      const facePath = path.join(faceDir, `${participantId}.jpg`);
-      const voicePath = path.join(voiceDir, `${participantId}.wav`);
+      fs.writeFileSync(
+        path.join(faceDir, `${participantId}.jpg`),
+        faceFile.buffer
+      );
 
-      fs.writeFileSync(facePath, faceFile.buffer);
-      fs.writeFileSync(voicePath, voiceFile.buffer);
+      fs.writeFileSync(
+        path.join(voiceDir, `${participantId}.wav`),
+        voiceFile.buffer
+      );
 
       const textCsvPath = path.join(textDir, "text_answers.csv");
       const metadataCsvPath = path.join(metadataDir, "metadata.csv");
@@ -115,6 +119,6 @@ app.post(
   }
 );
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
