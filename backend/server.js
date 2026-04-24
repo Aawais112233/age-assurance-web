@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 const supabase = createClient(
-  "https://powqbhwqtzbrslyyggphp.supabase.co",
+  "https://powqbhwqtzbrslyygphp.supabase.co",
   "sb_publishable_VjFnyzxT2VTknv_e6qdNVg_RF6hybYt"
 );
 
