@@ -234,7 +234,7 @@ function App() {
 
       console.log("Sending data to backend:", participantId);
 
-      const response = await fetch("http://127.0.0.1:5000/submit", {
+      const response = await fetch("https://age-assurance-web-production.up.railway.app/submit", {
         method: "POST",
         body: formData,
       });
